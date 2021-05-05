@@ -1,0 +1,27 @@
+#!/bin/bash
+PROG=`basename $0`
+NAME_TAG=$1
+function Usage() {
+    cat <<EOF
+This tool is to AWS EC2 instance by a 'Name' tag
+
+Arguments
+    Name        [Required]: The value of the 'Name' tag of the instance
+	                        you would like to connect
+
+Example
+    $PROG "myserver"
+EOF
+}
+
+#Start from here
+if [ $# -ne 1 ]; then
+    echo "Illegal number of parameters."
+    Usage
+else 
+    echo "Getting infomation of the instance with 'Name' tagged $NAME_TAG"
+	IPADDR=$(aws ec2 describe-instances --query 'sort_by(Reservations[].Instances[].{InstanceId:InstanceId,Tags:Tags[?Key==`Name`].Value|[0],InstanceType:InstanceType,State:State.Name,Ip:PublicIpAddress,AZ:Placement.AvailabilityZone,Platform:Platform},&Tags)' --output text | grep $NAME_TAG | awk '{ print $4 }')
+	ssh ec2-user@$IPADDR
+
+	
+fi
