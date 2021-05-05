@@ -3,17 +3,8 @@
 
 ## Workflow
 
-```mermaid
-graph
-A[HTTP service] -- "/newurl" --> B[Query if exist]
-B -- "Yes" --> C[Response with shorten url]
-B -- "No" --> D[Create a new record in DB]
-D --> C
-A -- "/Shorten URL" --> E[Query if exist]
-E -- "Yes" --> F[Redirect to actual URL, with 301]
-E -- "No" --> G[Go to 404.html]
-A -- "/" --> H[Just an index.html]
-```
+![Flow chart](https://github.com/Kiichi77/1OQBjgJkP/raw/master/diagram.png)
+
 ## Technology stack
 [_Flask_](https://flask.palletsprojects.com/en/1.1.x/) is a popular web micro-framework for building web applications with _Python_, whereas [_MongoDB_](https://www.mongodb.com/) is a [NoSQL](https://en.wikipedia.org/wiki/NoSQL) cross-platform document-oriented database program.
 
